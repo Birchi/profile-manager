@@ -22,22 +22,22 @@ function profile-manager () {
         exit 1
     fi
 
-    if [[ "${@[1]}" == "install" ]] || [[ "${@[1]}" == "add" ]] ; then
+    if [[ "${@:1:1}" == "install" ]] || [[ "${@:1:1}" == "add" ]] ; then
         shift 1
         ${profile_manager_cli_directory}/install.sh $@
-    elif [[ "${@[1]}" = "remove" ]] || [[ "${@[1]}" = "rm" ]] ; then
+    elif [[ "${@:1:1}" = "remove" ]] || [[ "${@:1:1}" = "rm" ]] ; then
         shift 1
         ${profile_manager_cli_directory}/remove.sh $@
-    elif [[ "${@[1]}" == "list" ]] || [[ "${@[1]}" == "ls" ]] ; then
+    elif [[ "${@:1:1}" == "list" ]] || [[ "${@:1:1}" == "ls" ]] ; then
         shift 1
         ${profile_manager_cli_directory}/list.sh $@
-    elif [[ "${@[1]}" == "enable" ]] ; then
+    elif [[ "${@:1:1}" == "enable" ]] ; then
         shift 1
         ${profile_manager_cli_directory}/enable.sh $@
-    elif [[ "${@[1]}" == "disable" ]] ; then
+    elif [[ "${@:1:1}" == "disable" ]] ; then
         shift 1
         ${profile_manager_cli_directory}/disable.sh $@
-    elif [[ "${@[1]}" == "version" ]] ; then
+    elif [[ "${@:1:1}" == "version" ]] ; then
         cat ${profile_manager_cli_directory}/VERSION
     else
         ${profile_manager_cli_directory}/help.sh

@@ -124,5 +124,5 @@ if [ -d \${PROFILE_MANAGER_DIRECTORY} ] ; then
         source \${PROFILE_MANAGER_DIRECTORY}/cli/main.sh
     fi
 fi
-# BEGIN PROFILE MANAGER
+# END PROFILE MANAGER
 EOF
