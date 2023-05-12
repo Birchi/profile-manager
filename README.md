@@ -26,6 +26,7 @@ This repository installs different profiles to your user's profile.
 | Command      | Description                       |
 | ------------ | --------------------------------- |
 | add          | Install a profile from a source.  |
+| config       | Manages the config of a profile.  |
 | disable      | Disable a locally stored profile. |
 | enable       | Enable a locally stored profile.  |
 | install      | Install a profile from a source.  |

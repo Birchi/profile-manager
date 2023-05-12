@@ -18,6 +18,7 @@ Commands:
   install             Installs a profile.
   list                Lists the installed profiles.
   remove              Removes an installed profile.
+  config              Manages the configuration.
 
 Run 'profile-manager COMMAND --help' for more information on a profile.
 EOF

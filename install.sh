@@ -102,10 +102,20 @@ if [ ${is_offline} -eq 1 ] ; then
 else
     rm -rf ${profile_manager_directory}/cli
     mkdir -p ${profile_manager_directory}/cli
-    for file_to_download in "disable.sh" "enable.sh" "help.sh" "install.sh" "list.sh" "main.sh" "remove.sh" "VERSION" ; do 
+    for file_to_download in "main.sh" "VERSION" ; do 
         curl -s -L --insecure "https://raw.githubusercontent.com/Birchi/profile-manager/main/cli/${file_to_download}" --output ${profile_manager_directory}/cli/${file_to_download} > /dev/null
     done
     chmod 744 ${profile_manager_directory}/cli/*.sh
+    mkdir -p ${profile_manager_directory}/cli/command
+    for file_to_download in "config.sh" "disable.sh" "enable.sh" "help.sh" "install.sh" "list.sh" "remove.sh" ; do
+        curl -s -L --insecure "https://raw.githubusercontent.com/Birchi/profile-manager/main/cli/command/${file_to_download}" --output ${profile_manager_directory}/cli/command/${file_to_download} > /dev/null
+    done
+    chmod 744 ${profile_manager_directory}/cli/command/*.sh
+    mkdir -p ${profile_manager_directory}/cli/command/config
+    for file_to_download in "help.sh" "list.sh" "set.sh" ; do
+        curl -s -L --insecure "https://raw.githubusercontent.com/Birchi/profile-manager/main/cli/command/config/${file_to_download}" --output ${profile_manager_directory}/cli/command/config/${file_to_download} > /dev/null
+    done
+    chmod 744 ${profile_manager_directory}/cli/command/config/*.sh
 fi
 
 sed '/# BEGIN PROFILE MANAGER/,/# END PROFILE MANAGER/d' ${profile_file} > ${profile_file}.tmp && cat ${profile_file}.tmp > ${profile_file} && rm ${profile_file}.tmp
@@ -117,6 +127,9 @@ export PROFILE_MANAGER_DIRECTORY=${profile_manager_directory}
 if [ -d \${PROFILE_MANAGER_DIRECTORY} ] ; then
     active_profile_directory=\${PROFILE_MANAGER_DIRECTORY}/profile/active
     for profile in \$(ls \${active_profile_directory}) ; do
+        if [ -f \${active_profile_directory}/\${profile}/config.sh ] ; then
+            source \${active_profile_directory}/\${profile}/config.sh
+        fi
         source \${active_profile_directory}/\${profile}/main.sh
     done
 

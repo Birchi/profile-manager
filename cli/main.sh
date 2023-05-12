@@ -10,36 +10,48 @@
 ##
 # Variables
 ##
-profile_manager_base_directory=${PROFILE_MANAGER_DIRECTORY:-~/.profile-manager}
-profile_manager_cli_directory=${profile_manager_base_directory}/cli
+# General 
+__directory__=$(cd $(dirname ${BASH_SOURCE[0]-$0}) && pwd)
+# Commands
+config_command=${__directory__}/command/config.sh
+install_command=${__directory__}/command/install.sh
+remove_command=${__directory__}/command/remove.sh
+list_command=${__directory__}/command/list.sh
+enable_command=${__directory__}/command/enable.sh
+disable_command=${__directory__}/command/disable.sh
+help_command=${__directory__}/command/help.sh
 
 ##
 # Functions
 ##
 function profile-manager () {
     if [ $# -eq 0 ] ; then
-        ${profile_manager_cli_directory}/help.sh
-        exit 1
+        ${help_command}
+        return 1
     fi
 
     if [[ "${@:1:1}" == "install" ]] || [[ "${@:1:1}" == "add" ]] ; then
         shift 1
-        ${profile_manager_cli_directory}/install.sh $@
+        ${install_command} $@
     elif [[ "${@:1:1}" = "remove" ]] || [[ "${@:1:1}" = "rm" ]] ; then
         shift 1
-        ${profile_manager_cli_directory}/remove.sh $@
+        ${remove_command} $@
     elif [[ "${@:1:1}" == "list" ]] || [[ "${@:1:1}" == "ls" ]] ; then
         shift 1
-        ${profile_manager_cli_directory}/list.sh $@
+        ${list_command} $@
+    elif [[ "${@:1:1}" == "config" ]] ; then
+        shift 1
+        ${config_command} $@
     elif [[ "${@:1:1}" == "enable" ]] ; then
         shift 1
-        ${profile_manager_cli_directory}/enable.sh $@
+        ${enable_command} $@
     elif [[ "${@:1:1}" == "disable" ]] ; then
         shift 1
-        ${profile_manager_cli_directory}/disable.sh $@
+        ${disable_command} $@
     elif [[ "${@:1:1}" == "version" ]] ; then
-        cat ${profile_manager_cli_directory}/VERSION
+        cat ${__directory__}/VERSION
     else
-        ${profile_manager_cli_directory}/help.sh
+        ${help_command}
     fi
 }
+
